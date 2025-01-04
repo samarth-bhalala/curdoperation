@@ -22,7 +22,7 @@
 //       .catch((error) => {
 //         setError(error.message);
 //       });
-//   }, []); 
+//   }, []);
 
 //   return (
 //     <>
@@ -31,9 +31,9 @@
 //         <h1>User Data</h1>
 //         {error && <p style={{ color: "red" }}>Error: {error}</p>}
 //         {userData ? (
-//           <pre>{JSON.stringify(userData, null, 2)}</pre> 
+//           <pre>{JSON.stringify(userData, null, 2)}</pre>
 //         ) : (
-//           <p>Loading...</p> 
+//           <p>Loading...</p>
 //         )}
 //       </div>
 //       <Footer />
@@ -46,7 +46,11 @@ import React, { useState, useEffect } from "react";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [formData, setFormData] = useState({ name: "", category: "", price: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    category: "",
+    price: "",
+  });
   const [editId, setEditId] = useState(null);
 
   // Fetch all products
@@ -101,51 +105,61 @@ function App() {
 
   // Edit product
   const handleEdit = (product) => {
-    setFormData({ name: product.name, category: product.category, price: product.price });
+    setFormData({
+      name: product.name,
+      category: product.category,
+      price: product.price,
+    });
     setEditId(product.id);
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="container-main">
       <h1>CRUD App for Products</h1>
 
       {}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">{editId ? "Update" : "Add"}</button>
-      </form>
+      <div className="view">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="category"
+            placeholder="Category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+          <br />
+          <button type="submit">{editId ? "Update" : "Add"}</button>
+        </form>
+      </div>
 
       {}
       <h2>Products</h2>
-      <ul>
+      <hr/>
+      <ul className="product-view">
         {products.map((product) => (
           <li key={product.id}>
-            {product.name}              {product.category}     ₹{product.price}
-            <button onClick={() => handleEdit(product)}>Edit</button>
-            <button onClick={() => handleDelete(product.id)}>Delete</button>
+            {product.name} {product.category} ₹{product.price}
+            <div className="li-container">
+              <button onClick={() => handleEdit(product)}>Edit</button>
+              <button onClick={() => handleDelete(product.id)}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>
